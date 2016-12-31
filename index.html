@@ -2,10 +2,10 @@
 <html lang="fr">
   <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="./css/styles.css"/>
+    <link rel="stylesheet" href="./css/styles.css" />
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="./css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="./css/leaflet.css"/>
+    <link rel="stylesheet" href="./css/bootstrap.min.css" />
+    <link rel="stylesheet" href="./css/leaflet.css" />
 
     <title>Geocodding & Reverse Geocodding</title>
   </head>
@@ -14,19 +14,20 @@
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
           <a class="navbar-brand" href="#">Carto BAN</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#geocodding">Géocodage</a></li>
-            <li><a href="#reverse-geocodding">Géocodage Inverse</a></li>
-            <li><a href="#about">A propos</a></li>
+            <li><a href="#" onclick="makeActive(event)">Home</a></li>
+            <li><a href="#geocodding" onclick="makeActive(event)">Géocodage</a></li>
+            <li><a href="#reverse-geocodding" onclick="makeActive(event)">Géocodage Inverse</a></li>
+            <li><a href="#geolocator" onclick="makeActive(event)">Géolocalisation</a></li>
+            <li><a href="#about" onclick="makeActive(event)">A propos</a></li>
             <li class="dropdown">
               <ul class="dropdown-menu">
                 <li class="dropdown-header">Marqueurs</li>
@@ -36,90 +37,89 @@
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Configuration <span class="caret"></span></a>
             </li>
           </ul>
-        </div><!--/.nav-collapse -->
+        </div>
+        <!--/.nav-collapse -->
       </div>
     </nav>
-      <div class="container-fluid">
-        <div class="starter-template">
-          <h1>Service de géocodage et géocodage inverse</h1>
-          <p class="lead">
-            Ce site utilise fièrement
-            <a href="http://www.openstreetmap.org/" target="_blank">OpenStreetMap</a>,
-            <a href="http://leafletjs.com/" target="_blank">Leaflet</a> et
-            <a href="http://adresse.data.gouv.fr/" target="_blank">la base adresse nationale</a>.
-          </p>
-        </div>
+    <div class="container-fluid">
+      <div class="starter-template">
+        <h1>Service de géocodage et géocodage inverse</h1>
+        <p class="lead">
+          Ce site utilise fièrement
+          <a href="http://www.openstreetmap.org/" target="_blank">OpenStreetMap</a>,
+          <a href="http://leafletjs.com/" target="_blank">Leaflet</a> et
+          <a href="http://adresse.data.gouv.fr/" target="_blank">la base adresse nationale</a>.
+        </p>
       </div>
-      <section>
-        <div class="row">
-          <div class="col-md-4" id="geocodding">
-            <h2>Géocodage :<br>Adresse <span>&#8594;</span> Géométrie</h2>
-            <ol>
-              <li>Vous renseignez une adresse et vous validez,</li>
-              <li>L'adresse est trouvée : elle est affichée sur la carte.<br>La recherche n'est pas probante : une liste est proposée.</li>
-              <!--li>Elle est corrigée et/ou complétée en direct,</li-->
-            </ol>
-            <div class="col-md-6" id="address_searcher">
-              <p>
-                <label for="adresse">Saisie de l'adresse :</label>
-              </p>
-              <div>
-                <textarea style='max-height: 150px' id="adresse" placeholder="Adresse à rechercher">63 Rue de Rivoli 75001 Paris</textarea>
-              </div>
-              <input type="submit" name="submit_address" id="submit_address" value="Rechercher">
+    </div>
+    <section>
+      <div class="row">
+        <div class="col-md-4" id="geocodding">
+          <h2>Géocodage :<br>Adresse <span>&#8594;</span> Géométrie</h2>
+          <ol>
+            <li>Vous renseignez une adresse et vous validez,</li>
+            <li>L'adresse est trouvée : elle est affichée sur la carte.<br>La recherche n'est pas probante : une liste est proposée.</li>
+            <!--li>Elle est corrigée et/ou complétée en direct,</li-->
+          </ol>
+          <div class="col-md-6" id="address_searcher">
+            <p>
+              <label for="adresse">Saisie de l'adresse :</label>
+            </p>
+            <div>
+              <textarea id="adresse" placeholder="Adresse à rechercher"></textarea>
             </div>
-            <div class="col-md-6" id="geocodding_result">
-            </div>
+            <input type="submit" name="submit_address" id="submit_address" value="Rechercher">
           </div>
-          <div class="col-md-4" id="geolocator">
-            <h2>Géo-localisation</h2>
-            <p>En se bassant sur :</p>
-            <ul>
-              <li>votre localisation,</li>
-              <li>votre adresse IP,</li>
-            </ul>
-            <p>il est possible d'afficher votre position présumée sur la carte.</p>
-              <input type="submit" id="locate" value="Localisez moi">
-            <p id="geolocatorResult"></p>
+          <div class="col-md-6" id="geocodding_result">
           </div>
-          <div class="col-md-4" id="reverse-geocodding">
-            <h2>Géocodage inverse :<br>Géométrie <span>&#8594;</span> Adresse</h2>
-            <ol>
-              <li>Vous renseignez une géométrie au format (latitude,longitude),</li>
-              <li>Elle est affichée sur la carte,</li>
-              <li>L'adresse correspondante est retournée.</li>
-            </ol>
-            <div class="col-md-6" id="coordinates_searcher">
-              <p>
-                <label for="coordonnees">Saisie des coordonnées :</label>
-              </p>
-              <p>
-                <textarea style='max-height: 150px' name="coordonnees" id="coordonnees" placeholder="lat,lon à rechercher" title="Séparateur : {,|;| } avec ou sans espace avant et/ou après.">48.856578,2.351828</textarea>
-              </p>
-              <p>
-                <input type="submit" name="submit_coordinates" id="submit_coordinates" value="Rechercher">
-              </p>
-            </div>
-            <div class="col-md-6" id="reverseGeocodding">
-              <p id="reverseGeocoddingResult"></p>
-            </div>
+        </div>
+        <div class="col-md-4" id="geolocator">
+          <h2>Géo-localisation</h2>
+          <p>En se bassant sur :</p>
+          <ul>
+            <li>votre localisation,</li>
+            <li>votre adresse IP,</li>
+          </ul>
+          <p>il est possible d'afficher votre position présumée sur la carte.</p>
+          <input type="submit" id="locate" value="Localisez moi">
+          <p id="geolocatorResult"></p>
+        </div>
+        <div class="col-md-4" id="reverse-geocodding">
+          <h2>Géocodage inverse :<br>Géométrie <span>&#8594;</span> Adresse</h2>
+          <ol>
+            <li>Vous renseignez une géométrie au format (latitude,longitude),</li>
+            <li>Elle s'affiche sur la carte,</li>
+            <li>L'adresse correspondante est retournée.</li>
+          </ol>
+          <div class="col-md-6" id="coordinates_searcher">
+            <p>
+              <label for="coordonnees">Saisie des coordonnées :</label>
+            </p>
+            <p>
+              <textarea name="coordonnees" id="coordonnees" placeholder="Exemple : 48.856578, 2.351828" title="Séparateur : {,|;| } avec ou sans espace avant et/ou après."></textarea>
+            </p>
+            <p>
+              <input type="submit" name="submit_coordinates" id="submit_coordinates" value="Rechercher">
+            </p>
           </div>
+          <div class="col-md-6" id="reverseGeocodding">
+            <p id="reverseGeocoddingResult"></p>
+          </div>
+        </div>
       </div>
       <div class="container" id="map"></div>
       <div class="container" id="about">
         <h2>A propos</h2>
         <p>
-          Cet mini-site utilise le projet base adresse nationale pour réaliser le géocodage des adresses et le géocodage inverse.<br />
-          L'affichage est fait via leaflet avec la cartographie OpenStreetMap.<br />
-          Bootstrap est aussi dans la place !
+          Ce mini-site utilise le projet <a href="http://adresse.data.gouv.fr/" target="_blank">base adresse nationale</a> pour réaliser le géocodage des adresses et le géocodage inverse.<br>
+          L'affichage est fait via <a href="http://leafletjs.com/" target="_blank">Leaflet</a> avec la cartographie <a href="http://www.openstreetmap.org/" target="_blank">OpenStreetMap</a>.<br>
+          <a href="https://getbootstrap.com/" target="_blank">Bootstrap</a> est aussi dans la place !
         </p>
       </div>
-      </section>
-      <footer>
-        <p>
-          Réalisé en 2016 par <a href="http://cv.rmaziere.fr" target="_blank">Romain MAZIERE</a> et disponible sur <a href="https://github.com/rmaziere/onePageGeo" target="_blank">GitHub</a>
-        </p>
-      </footer>
+    </section>
+    <footer>
+      <p>Réalisé en 2016 par <a href="http://cv.rmaziere.fr" target="_blank">Romain MAZIERE</a> et disponible sur <a href="https://github.com/rmaziere/onePageGeo" target="_blank">GitHub</a></p>
+    </footer>
     <!-- JavaScript -->
     <script src="./js/jquery.min.js"></script>
     <script src="./js/bootstrap.min.js"></script>

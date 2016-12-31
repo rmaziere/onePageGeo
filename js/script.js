@@ -7,6 +7,27 @@ var layer = L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png", {
 var layerMarkers = [];
 var persistant = true;
 
+function makeHomeActive() {
+  navRemoveActive();
+  var el = document.querySelector(".navbar-nav a");
+  el.parentNode.className = "active";
+}
+
+makeHomeActive();
+
+function makeActive(event) {
+  navRemoveActive();
+  var el = event.target;
+  var selector = event.target.hash;
+  el.parentNode.className = "active";
+}
+
+function navRemoveActive() {
+  if (document.getElementsByClassName("active").length > 0) {
+    document.getElementsByClassName("active")[0].removeAttribute("class");
+  }
+}
+
 document.getElementById("persistantMarkerY").addEventListener("click", persistantMarkerY);
 document.getElementById("persistantMarkerN").addEventListener("click", persistantMarkerN);
 
@@ -81,7 +102,7 @@ function removeResultDiv(selector) {
   }
 }
 
-function showAddress(selector, text){
+function showAddress(selector, text) {
   removeAddress(selector);
   var el = document.getElementById(selector + "Result");
   var elTitle = document.createElement("strong");
@@ -90,7 +111,7 @@ function showAddress(selector, text){
   el.innerHTML = el.innerHTML + text;
 }
 
-function removeAddress(selector){
+function removeAddress(selector) {
   var el = document.getElementById(selector + "Result");
   while (el.firstChild) {
     el.removeChild(el.firstChild);
@@ -227,11 +248,12 @@ function reverseGeocodding(latitude, longitude, module) {
       var result = JSON.parse(ajax.responseText);
 
       if (result.features.length == 1) {
-        var labelTextTitle = "", iconColor;
+        var labelTextTitle = "",
+          iconColor;
         if (module == "reverseGeocodding") {
           labelTextTitle = "<strong>Géocodage inverse</strong><br>";
           iconColor = "greenIcon";
-        }else if (module == "geolocator") {
+        } else if (module == "geolocator") {
           labelTextTitle = "<strong>Votre position</strong><br>";
           iconColor = "redIcon";
         }
