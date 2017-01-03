@@ -25,7 +25,6 @@ J'ai utilisé quelques outils en ligne :
 
 ##Pistes d'évolution##
 Ne pas exécuter les fonctions si les données de recherche n'ont pas été modifiées,
-Permettre l'ajout de marqueurs sur la carte par simple clic,
 Optimiser le script,
 Permettre le passage de paramètres dans l'URL,
 Retourner les adresses formatées et enrichies,

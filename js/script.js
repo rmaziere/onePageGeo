@@ -13,6 +13,11 @@ function makeHomeActive() {
   el.parentNode.className = "active";
 }
 
+//Add Marker on Map click
+map.on('click', function(e){
+	reverseGeocodding(e.latlng["lat"], e.latlng["lng"]);
+});
+
 makeHomeActive();
 
 function makeActive(event) {
@@ -38,32 +43,14 @@ function mapSetView(lat, long, zoom) {
   map.setView([lat, long], zoom);
 }
 
-function addMarker(lat, long, label, icon) {
+function addMarker(lat, long, label, iconChoice) {
   removeLayer(layerMarkers);
-  switch (icon) {
-    case "redIcon":
-      var marker = L.marker([lat, long], {
-        icon: redIcon
-      });
-      break;
-    case "greenIcon":
-      var marker = L.marker([lat, long], {
-        icon: greenIcon
-      });
-      break;
-    case "blueIcon":
-      var marker = L.marker([lat, long], {
-        icon: blueIcon
-      });
-      break;
-    default:
-      var marker = L.marker([lat, long], {
-        icon: blackIcon
-      });
-      break;
-  }
+
+  var marker = L.marker([lat, long], {icon: iconChoice});
   layerMarkers.push(marker);
   marker.addTo(map).bindPopup(label).openPopup();
+
+  mapSetView(lat, long);
 }
 
 function persistantMarkerY(event) {
@@ -145,8 +132,7 @@ function selectResult(event) {
   parentNode.appendChild(newNode);
 
   removeResultDiv("geocodding_result");
-  addMarker(lat, long, label, "blueIcon");
-  mapSetView(lat, long);
+  addMarker(lat, long, label, blueIcon);
 }
 
 //Géocodage
@@ -191,8 +177,7 @@ function geocodding() {
         } else {
           var feature = result.features[0];
           removeResultDiv("geocodding_result");
-          addMarker(feature.geometry.coordinates[1], feature.geometry.coordinates[0], "<strong>Géocodage</strong><br>" + feature.properties.label, "blueIcon");
-          mapSetView(feature.geometry.coordinates[1], feature.geometry.coordinates[0]);
+          addMarker(feature.geometry.coordinates[1], feature.geometry.coordinates[0], "<strong>Géocodage</strong><br>" + feature.properties.label, blueIcon);
         }
       }
     });
@@ -248,17 +233,19 @@ function reverseGeocodding(latitude, longitude, module) {
       var result = JSON.parse(ajax.responseText);
 
       if (result.features.length == 1) {
-        var labelTextTitle = "",
-          iconColor;
+          var feature = result.features[0];
+          var labelTextTitle = "";
+          iconColor = blackIcon;
+
         if (module == "reverseGeocodding") {
+          showAddress(module, feature.properties.label);
           labelTextTitle = "<strong>Géocodage inverse</strong><br>";
-          iconColor = "greenIcon";
+          iconColor = greenIcon;
         } else if (module == "geolocator") {
+          showAddress(module, feature.properties.label);
           labelTextTitle = "<strong>Votre position</strong><br>";
-          iconColor = "redIcon";
+          iconColor = redIcon;
         }
-        var feature = result.features[0];
-        showAddress(module, feature.properties.label);
         addMarker(feature.geometry.coordinates[1], feature.geometry.coordinates[0], labelTextTitle + feature.properties.label, iconColor);
       }
     }
