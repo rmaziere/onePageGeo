@@ -1,7 +1,7 @@
 var map = L.map("map").setView([48.856578, 2.351828], 10);
 
-var layer = L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png", {
-  attribution: "&copy; <a href='http://osm.org/copyright'>OpenStreetMap</a> contributors"
+var layer = L.tileLayer("https://{s}.tile.osm.org/{z}/{x}/{y}.png", {
+  attribution: "&copy; <a href='https://osm.org/copyright'>OpenStreetMap</a> contributors"
 }).addTo(map);
 
 var layerMarkers = [];
@@ -50,7 +50,7 @@ function addMarker(lat, long, label, iconChoice) {
   layerMarkers.push(marker);
   marker.addTo(map).bindPopup(label).openPopup();
 
-  mapSetView(lat, long);
+  mapSetView(lat, long, 14);
 }
 
 function persistantMarkerY(event) {
@@ -146,7 +146,7 @@ function geocodding() {
     var ajax = new XMLHttpRequest();
 
     // destination et type de la requête AJAX (asynchrone ou non)
-    ajax.open("GET", "http://api-adresse.data.gouv.fr/search/?q=" + valeur_adresse, true);
+    ajax.open("GET", "https://api-adresse.data.gouv.fr/search/?q=" + valeur_adresse, true);
 
     // métadonnées de la requête AJAX
     ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -219,7 +219,7 @@ function reverseGeocodding(latitude, longitude, module) {
   var ajax = new XMLHttpRequest();
 
   // destination et type de la requête AJAX (asynchrone ou non)
-  ajax.open("GET", "http://api-adresse.data.gouv.fr/reverse/?lon=" + longitude + "&lat=" + latitude, true);
+  ajax.open("GET", "https://api-adresse.data.gouv.fr/reverse/?lon=" + longitude + "&lat=" + latitude, true);
 
   // métadonnées de la requête AJAX
   ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
