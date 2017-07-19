@@ -1,29 +1,29 @@
-#Carto BAN - An one page site
+# Carto BAN - An one page site
 
 Ce mini-site utilise le projet [base adresse nationale](https://adresse.data.gouv.fr) pour réaliser le géocodage des adresses et le géocodage inverse. De fait, il n'est fonctionnel que pour la France.
 L'affichage est fait via [Leaflet](http://leafletjs.com/) avec la cartographie d'[OpenStreetMap](https://www.openstreetmap.org).
 [Bootstrap](https://getbootstrap.com/) permet quant à lui un affichage adaptatif.
 
-##Technologie
+## Technologie
 Les technologies utilisées sont :
 
 - html5,
 - javascript,
 - css3.
 
-##Téléchargement
+## Téléchargement
 Le projet est disponible sur [GitHub/rmaziere/onePageGeo](https://github.com/rmaziere/onePageGeo)
 
-##Demo
+## Demo
 Une démonstration est disponible en ligne : [dev.rmaziere.fr/onePageGeo](https://dev.rmaziere.fr/onePageGeo/).
 
-##Ressources
+## Ressources
 J'ai utilisé quelques outils en ligne :
 
 - [jslint](http://www.jslint.com/) pour valider le script js,
 - [jsbeautifier/](http://jsbeautifier.org/) pour formater le script.
 
-##Pistes d'évolution
+## Pistes d'évolution
 Ne pas exécuter les fonctions si les données de recherche n'ont pas été modifiées,
 Optimiser le script,
 Permettre le passage de paramètres dans l'URL,
