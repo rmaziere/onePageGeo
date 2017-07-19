@@ -1,4 +1,4 @@
-# Carto BAN - An one page site
+# Carto BAN - A single page site
 
 Ce mini-site utilise le projet [base adresse nationale](https://adresse.data.gouv.fr) pour réaliser le géocodage des adresses et le géocodage inverse. De fait, il n'est fonctionnel que pour la France.
 L'affichage est fait via [Leaflet](http://leafletjs.com/) avec la cartographie d'[OpenStreetMap](https://www.openstreetmap.org).
